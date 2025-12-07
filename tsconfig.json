@@ -1,0 +1,22 @@
+// tsconfig.json
+
+{
+  "compilerOptions": {
+    /* Type Checking and Module Resolution */
+    "esModuleInterop": true,   /* <-- AKTIFKAN INI */
+    "moduleResolution": "node",
+    
+    /* Required for modern Node.js */
+    "module": "commonjs", // Atau "NodeNext" jika Anda menggunakan Node versi terbaru
+    "target": "es2020",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    
+    /* Other settings */
+    "strict": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules"]
+}
