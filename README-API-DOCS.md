@@ -270,10 +270,11 @@ Authorization: Bearer <access_token>
 
 **Admin Account:**
 
-* Email: [admin@inventory.com](mailto:admin@inventory.com)
+* Email: [admin@mail.com](mailto:admin@mail.com)
 * Password: admin123
 
 **Regular User:**
 
 * Email: [user1@inventory.com](mailto:user1@inventory.com)
 * Password: user123
+
