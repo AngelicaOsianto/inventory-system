@@ -1,46 +1,77 @@
-// --- KONFIGURASI PRISMA (TETAP SAMA) ---
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  // Gunakan SQLite untuk development
-  provider = "sqlite" 
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 model User {
   id        Int      @id @default(autoincrement())
-  name      String   
-  email     String   @unique 
-  password  String   
-  
-  // PERBAIKAN INI: Role diubah menjadi String
+  name      String
+  email     String   @unique
+  password  String
   role      String   @default("USER")
-  
-  // Timestamps
+
+  products  Product[]
+
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt    
-  
-  products  Product[] 
+  updatedAt DateTime @updatedAt
 }
 
-// ------------------------------------------------------------------
-// 3. CONTOH ENTITAS INVENTORY (Untuk demonstrasi relasi)
-// ------------------------------------------------------------------
 model Product {
-  id              Int      @id @default(autoincrement())
-  name            String
-  code            String?  @unique
-  stock           Int
-  price           Float
-  
-  // Relasi One-to-Many ke User (Ownership)
-  userId          Int
-  user            User     @relation(fields: [userId], references: [id])
-  
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-  
-  // Anda akan menambahkan relasi Category, Supplier, dll. di sini
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String?
+  price       Float
+  quantity    Int
+
+  categoryId  Int
+  supplierId  Int
+  ownerId     Int
+
+  category    Category  @relation(fields: [categoryId], references: [id])
+  owner       User      @relation(fields: [ownerId], references: [id])
+  supplier    Supplier  @relation(fields: [supplierId], references: [id])
+
+  suppliers   ProductSupplier[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([name])
 }
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+
+  products  Product[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Supplier {
+  id        Int      @id @default(autoincrement())
+  name      String
+  contact   String?
+
+  products  Product[]
+  suppliers ProductSupplier[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ProductSupplier {
+  productId  Int
+  supplierId Int
+
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  supplier   Supplier @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+
+  @@id([productId, supplierId])
+}
+
