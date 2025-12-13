@@ -1,12 +1,13 @@
 import express from 'express';
-import { authenticate } from '../middleware/auth.middleware.js';
+import { authMiddleware } from '../middleware/auth.middleware.js';
 
 const router = express.Router();
 
-router.get('/protected', authenticate, (req, res) => {
+router.get('/', authMiddleware, (req, res) => {
   res.json({
-    message: 'Access granted',
-    user: req.user
+    success: true,
+    message: 'Auth middleware works!',
+    user: req.user,
   });
 });
 

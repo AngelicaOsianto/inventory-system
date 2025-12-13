@@ -27,8 +27,14 @@ export const register = async (req, res, next) => {
     });
 
     res.status(201).json({
+      success: true,
       message: 'User registered successfully',
-      data: { id: user.id, email: user.email },
+      data: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
     });
   } catch (err) {
     next(err);
@@ -43,7 +49,7 @@ export const login = async (req, res, next) => {
       where: { email },
     });
 
-    if (!user || !user.password) {
+    if (!user) {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
@@ -58,8 +64,33 @@ export const login = async (req, res, next) => {
     });
 
     res.json({
+      success: true,
       message: 'Login successful',
       token,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const me = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        role: true,
+        createdAt: true,
+      },
+    });
+
+    res.json({
+      success: true,
+      data: user,
     });
   } catch (err) {
     next(err);

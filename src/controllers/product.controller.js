@@ -1,11 +1,6 @@
 import { prisma } from '../config/database.js';
 import { successResponse } from '../utils/response.js';
 
-
-/**
- * GET ALL PRODUCTS
- * USER and ADMIN
- */
 export const getProducts = async (req, res, next) => {
   try {
     const products = await prisma.product.findMany({
@@ -32,10 +27,6 @@ export const getProducts = async (req, res, next) => {
   }
 };
 
-/**
- * GET PRODUCT BY ID
- * USER and ADMIN
- */
 export const getProductById = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -69,10 +60,6 @@ export const getProductById = async (req, res, next) => {
   }
 };
 
-/**
- * CREATE PRODUCT
- * ADMIN ONLY
- */
 export const createProduct = async (req, res, next) => {
   try {
     const { name, description, price, quantity, categoryId, supplierId } = req.body;
@@ -83,7 +70,6 @@ export const createProduct = async (req, res, next) => {
       });
     }
 
-    // ownerId diambil dari TOKEN
     const ownerId = req.user.id;
 
     const product = await prisma.product.create({
@@ -107,10 +93,7 @@ export const createProduct = async (req, res, next) => {
   }
 };
 
-/**
- * UPDATE PRODUCT
- * ADMIN ONLY
- */
+
 export const updateProduct = async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -129,10 +112,7 @@ export const updateProduct = async (req, res, next) => {
   }
 };
 
-/**
- * DELETE PRODUCT
- * ADMIN ONLY
- */
+
 export const deleteProduct = async (req, res, next) => {
   try {
     const { id } = req.params;

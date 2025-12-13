@@ -4,11 +4,10 @@
   "description": "Inventory Management REST API",
   "type": "module",
   "scripts": {
-  "dev": "nodemon server.js",
-  "start": "node server.js",
-  "prisma": "prisma",
-  "seed": "node prisma/seed.js"
-},
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "seed": "npx prisma db seed"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/AngelicaOsianto/inventory-system.git"
@@ -27,5 +26,8 @@
   "devDependencies": {
     "nodemon": "^3.1.11",
     "prisma": "^5.22.0"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
   }
 }

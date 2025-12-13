@@ -7,7 +7,7 @@ import {
   deleteSupplier,
 } from '../controllers/supplier.controller.js';
 
-import { authenticate } from '../middleware/auth.middleware.js';
+import { authMiddleware } from '../middleware/auth.middleware.js';
 import { authorize } from '../middleware/role.middleware.js';
 import { validate } from '../middleware/validate.middleware.js';
 import { supplierSchema } from '../validators/supplier.validator.js';
@@ -21,7 +21,7 @@ router.get('/:id', getSupplierById);
 // Protected (ADMIN)
 router.post(
   '/',
-  authenticate,
+  authMiddleware,
   authorize('ADMIN'),
   validate(supplierSchema),
   createSupplier
@@ -29,7 +29,7 @@ router.post(
 
 router.put(
   '/:id',
-  authenticate,
+  authMiddleware,
   authorize('ADMIN'),
   validate(supplierSchema),
   updateSupplier
@@ -37,7 +37,7 @@ router.put(
 
 router.delete(
   '/:id',
-  authenticate,
+  authMiddleware,
   authorize('ADMIN'),
   deleteSupplier
 );

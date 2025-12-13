@@ -4,21 +4,21 @@ import {
   getCategoryById,
   createCategory,
   updateCategory,
-  deleteCategory
+  deleteCategory,
 } from '../controllers/category.controller.js';
 
-import { authenticate } from '../middleware/auth.middleware.js';
+import { authMiddleware } from '../middleware/auth.middleware.js';
 import { requireAdmin } from '../middleware/role.middleware.js';
 
 const router = express.Router();
 
-// READ (USER & ADMIN)
-router.get('/', authenticate, getCategories);
-router.get('/:id', authenticate, getCategoryById);
+// PUBLIC
+router.get('/', getCategories);
+router.get('/:id', getCategoryById);
 
-// WRITE (ADMIN ONLY)
-router.post('/', authenticate, requireAdmin, createCategory);
-router.put('/:id', authenticate, requireAdmin, updateCategory);
-router.delete('/:id', authenticate, requireAdmin, deleteCategory);
+// ADMIN ONLY
+router.post('/', authMiddleware, requireAdmin, createCategory);
+router.put('/:id', authMiddleware, requireAdmin, updateCategory);
+router.delete('/:id', authMiddleware, requireAdmin, deleteCategory);
 
 export default router;

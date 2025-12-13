@@ -7,18 +7,20 @@ import {
   deleteProduct,
 } from '../controllers/product.controller.js';
 
-import { authenticate } from '../middleware/auth.middleware.js';
+import { authMiddleware } from '../middleware/auth.middleware.js';
 import { requireAdmin } from '../middleware/role.middleware.js';
 
 const router = express.Router();
 
-// USER & ADMIN
-router.get('/', authenticate, getProducts);
-router.get('/:id', authenticate, getProductById);
+// PUBLIC (TANPA TOKEN)
 
-// ADMIN ONLY
-router.post('/', authenticate, requireAdmin, createProduct);
-router.put('/:id', authenticate, requireAdmin, updateProduct);
-router.delete('/:id', authenticate, requireAdmin, deleteProduct);
+router.get('/', getProducts);
+router.get('/:id', getProductById);
+
+// PROTECTED (ADMIN)
+
+router.post('/', authMiddleware, requireAdmin, createProduct);
+router.put('/:id', authMiddleware, requireAdmin, updateProduct);
+router.delete('/:id', authMiddleware, requireAdmin, deleteProduct);
 
 export default router;

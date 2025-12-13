@@ -1,10 +1,6 @@
 import { prisma } from '../config/database.js';
 import { successResponse } from '../utils/response.js';
 
-/**
- * GET /api/suppliers
- * List supplier + pagination + search
- */
 export const getSuppliers = async (req, res, next) => {
   try {
     const { page = 1, limit = 10, search } = req.query;
@@ -45,9 +41,6 @@ export const getSuppliers = async (req, res, next) => {
   }
 };
 
-/**
- * GET /api/suppliers/:id
- */
 export const getSupplierById = async (req, res, next) => {
   try {
     const id = Number(req.params.id);
@@ -75,10 +68,7 @@ export const getSupplierById = async (req, res, next) => {
   }
 };
 
-/**
- * POST /api/suppliers
- * ADMIN only
- */
+
 export const createSupplier = async (req, res, next) => {
   try {
     const { name, contact } = req.body;
@@ -97,10 +87,7 @@ export const createSupplier = async (req, res, next) => {
   }
 };
 
-/**
- * PUT /api/suppliers/:id
- * ADMIN only
- */
+
 export const updateSupplier = async (req, res, next) => {
   try {
     const id = Number(req.params.id);
@@ -120,10 +107,7 @@ export const updateSupplier = async (req, res, next) => {
   }
 };
 
-/**
- * DELETE /api/suppliers/:id
- * ADMIN only
- */
+
 export const deleteSupplier = async (req, res, next) => {
   try {
     const id = Number(req.params.id);
