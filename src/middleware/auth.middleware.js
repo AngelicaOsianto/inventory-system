@@ -3,8 +3,12 @@ import jwt from 'jsonwebtoken';
 export const authenticate = (req, res, next) => {
   const authHeader = req.headers.authorization;
 
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(401).json({ message: 'Unauthorized' });
+  if (!authHeader) {
+    return res.status(401).json({ message: 'No token provided' });
+  }
+
+  if (!authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({ message: 'Invalid auth format' });
   }
 
   const token = authHeader.split(' ')[1];
