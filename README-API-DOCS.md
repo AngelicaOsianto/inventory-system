@@ -266,15 +266,4 @@ Authorization: Bearer <access_token>
 
 ---
 
-## Test Credentials
-
-**Admin Account:**
-
-* Email: [admin@mail.com](mailto:admin@mail.com)
-* Password: admin123
-
-**Regular User:**
-
-* Email: [user1@inventory.com](mailto:user1@inventory.com)
-* Password: user123
 
